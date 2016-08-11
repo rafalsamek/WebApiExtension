@@ -223,6 +223,26 @@ class WebApiContext implements ApiClientAwareContext
     }
 
     /**
+     * Checks that response has specific headers.
+     *
+     * @param TableNode $headers    expected headers
+     *
+     * @Then /^(?:the )?response should contain headers:$/
+     */
+    public function theResponseShouldContainHeaders(TableNode $headers)
+    {
+        $expected = $headers->getRowsHash();
+        $actual = $this->response->getHeaders();
+
+        Assertions::assertGreaterThanOrEqual(count($expected), count($actual));
+
+        foreach ($expected as $key => $needle) {
+            Assertions::assertArrayHasKey($key, $actual);
+            Assertions::assertEquals($this->replacePlaceHolder($expected[$key]), $actual[$key]);
+        }
+    }
+
+    /**
      * Checks that response body contains specific text.
      *
      * @param string $text
