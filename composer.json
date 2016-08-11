@@ -1,11 +1,15 @@
 {
-    "name": "behat/web-api-extension",
+    "name": "ianlet/web-api-extension",
     "type": "behat-extension",
-    "description": "Web API extension for Behat",
+    "description": "For of the official Web API extension for Behat, behat/web-api-extension",
     "keywords": ["api", "test"],
     "homepage": "http://extensions.behat.org",
     "license": "MIT",
     "authors": [
+        {
+            "name": "Ian Letourneau",
+            "email": "letourneau.ian@gmail.com"
+        },
         {
             "name": "Christophe Coevoet",
             "email": "stof@notk.org"
