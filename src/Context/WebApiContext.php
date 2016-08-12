@@ -420,12 +420,16 @@ class WebApiContext implements ApiClientAwareContext
         return $this->client;
     }
 
-    private function assertArrayContainsItems($items, $subject)
+    private function assertArrayContainsItems($items, $array)
     {
-        Assertions::assertGreaterThanOrEqual(count($items), count($subject));
+        Assertions::assertGreaterThanOrEqual(count($items), count($array));
         foreach ($items as $key => $needle) {
-            Assertions::assertArrayHasKey($key, $subject);
-            Assertions::assertEquals($this->replacePlaceHolder($items[$key]), $subject[$key]);
+            Assertions::assertArrayHasKey($key, $array);
+
+            $expected = $this->replacePlaceHolder($items[$key]);
+            $actual = is_array($array[$key]) ? $array[$key][0] : $array[$key];
+
+            Assertions::assertEquals($expected, $actual);
         }
     }
 }
