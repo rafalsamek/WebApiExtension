@@ -234,12 +234,7 @@ class WebApiContext implements ApiClientAwareContext
         $expected = $headers->getRowsHash();
         $actual = $this->response->getHeaders();
 
-        Assertions::assertGreaterThanOrEqual(count($expected), count($actual));
-
-        foreach ($expected as $key => $needle) {
-            Assertions::assertArrayHasKey($key, $actual);
-            Assertions::assertEquals($this->replacePlaceHolder($expected[$key]), $actual[$key]);
-        }
+        $this->assertArrayContainsItems($expected, $actual);
     }
 
     /**
@@ -298,11 +293,7 @@ class WebApiContext implements ApiClientAwareContext
             );
         }
 
-        Assertions::assertGreaterThanOrEqual(count($etalon), count($actual));
-        foreach ($etalon as $key => $needle) {
-            Assertions::assertArrayHasKey($key, $actual);
-            Assertions::assertEquals($etalon[$key], $actual[$key]);
-        }
+        $this->assertArrayContainsItems($etalon, $actual);
     }
 
     /**
@@ -427,5 +418,14 @@ class WebApiContext implements ApiClientAwareContext
         }
 
         return $this->client;
+    }
+
+    private function assertArrayContainsItems($items, $subject)
+    {
+        Assertions::assertGreaterThanOrEqual(count($items), count($subject));
+        foreach ($items as $key => $needle) {
+            Assertions::assertArrayHasKey($key, $subject);
+            Assertions::assertEquals($this->replacePlaceHolder($items[$key]), $subject[$key]);
+        }
     }
 }
